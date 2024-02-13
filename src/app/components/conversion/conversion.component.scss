@@ -1,0 +1,19 @@
+.conversion {
+    padding: 0 30px;
+    margin-top: 40px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+
+    &__side {
+        display: flex;
+        gap: 16px;
+
+    }
+
+    &__select {
+
+    }
+}

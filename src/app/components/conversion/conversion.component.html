@@ -1,0 +1,24 @@
+<div class="conversion" [formGroup]="form">
+    <div class="conversion__side">
+        <mat-form-field class="conversion__select">
+            <mat-select formControlName="leftCurrentCurrency">
+                <mat-option *ngFor="let currency of currencies" [value]="currency">{{currency}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="conversion__input">
+            <input type="text" matInput formControlName="leftCurrencyValue">
+        </mat-form-field>
+    </div>
+    <mat-icon class="header__refresh" svgIcon="conversion" aria-hidden="false" aria-label="refresh"></mat-icon>
+
+    <div class="conversion__side">
+        <mat-form-field class="conversion__select">
+            <mat-select formControlName="rightCurrentCurrency">
+                <mat-option *ngFor="let currency of currencies" [value]="currency">{{currency}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field class="conversion__input">
+            <input type="text" matInput formControlName="rightCurrencyValue">
+        </mat-form-field>
+    </div>
+</div>

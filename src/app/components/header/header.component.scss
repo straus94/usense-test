@@ -1,0 +1,26 @@
+.header {
+    &__rates {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+        width: 100%;
+        justify-content: flex-end;
+    }
+
+    &__refresh {
+        cursor: pointer;
+
+        &:hover {
+            transform: rotate(30deg);
+            transition-duration: 0.3s;
+        }
+    }
+
+    &__rate {
+        font-size: 20px;
+
+        span {
+            font-weight: 600;
+        }
+    }
+}
