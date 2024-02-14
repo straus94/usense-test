@@ -47,3 +47,9 @@ a {
 a:hover {
   text-decoration: none;
 }
+
+input[matinput]::-webkit-outer-spin-button,
+input[matinput]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

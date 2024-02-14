@@ -3,8 +3,11 @@
         <span>USENS-test Exchanges</span>
         <div class="header__rates">
             <mat-icon class="header__refresh" svgIcon="refresh" aria-hidden="false" aria-label="refresh" (click)="refresh()"></mat-icon>
-            <div class="header__rate"><span>USD:</span> 38.44</div>
-            <div class="header__rate"><span>EUR:</span> 41.11</div>
+            <ng-container *ngFor="let item of headerData | async">
+                <div class="header__rate"> {{item.value | currency: item.currency}}</div>
+            </ng-container>
+
+            <!-- <div class="header__rate"> {{41.11 | currency: currencies.EUR}}</div> -->
         </div>
     </mat-toolbar>
 </div>
