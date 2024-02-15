@@ -1,30 +1,15 @@
 import { Injectable } from '@angular/core';
 import {CURRENCIES_ENUM} from '../shared/app.enum';
-import {IConversionCurrencyData, IConversionData, ICurrencies, IHeaderData} from '../shared/app.interfaces';
+import {IConversionCurrencyData, IConversionData, IHeaderData} from '../shared/app.interfaces';
 import {BehaviorSubject, Observable, map} from 'rxjs';
 import {ApiService} from './api.service';
 import {LEFT_CURRENCY_VALUE, MAIN_CURRENCY} from '../shared/app.constants';
-
-type List = {
-    [key: string]: CURRENCIES_ENUM;
-}
-
-interface IState {
-    currencies: ICurrencies | null;
-    formData: IConversionData;
-    // headerData: IHeaderData[];
-}
 
 const initialFormData: IConversionData = {
     leftCurrencyValue: 0,
     leftCurrentCurrency: CURRENCIES_ENUM.UAH,
     rightCurrencyValue: 0,
     rightCurrentCurrency: CURRENCIES_ENUM.USD
-}
-
-const initialState: IState = {
-    currencies: null,
-    formData: initialFormData
 }
 
 @Injectable({
@@ -41,7 +26,6 @@ export class StoreService {
     private formData: BehaviorSubject<IConversionData> = new BehaviorSubject<IConversionData>(initialFormData);
     public formData$: Observable<IConversionData> = this.formData.asObservable();
 
-    private exchangeCoeff = {};
     private changedKey: string = LEFT_CURRENCY_VALUE;
 
     constructor(
@@ -52,7 +36,6 @@ export class StoreService {
         this.apiService.getCurrentRating().pipe(
             map(data => {
                 return Object.keys(CURRENCIES_ENUM).filter(currency => currency !== MAIN_CURRENCY).map(item => {
-                    console.log(data.conversion_rates[item]);
                     const roundedNumber = (1 / data.conversion_rates[item] * 100) / 100;
                     return {
                         currency: item as CURRENCIES_ENUM,
@@ -61,7 +44,6 @@ export class StoreService {
                 });
             })
         ).subscribe(resp => {
-            this.setExchangeDataByMainCurrency(resp);
             this.headerData.next(resp);
         });
     }
@@ -70,8 +52,6 @@ export class StoreService {
         const {from, to} = data;
 
         this.apiService.pairConversion(from, to).subscribe(resp => {
-            console.log(resp);
-            console.log(data);
             this.formData.next({
                 ...formValue,
                 [data.changedKey || this.changedKey]: (data.value * resp.conversion_rate)
@@ -81,10 +61,7 @@ export class StoreService {
             if (data.changedKey) {
                 this.changedKey = data.changedKey;
             }
-            console.log(this.formData);
         })
-
-
     }
 
     public changeCurrency(data: {changedKey: string, value: CURRENCIES_ENUM}): void {
@@ -100,16 +77,4 @@ export class StoreService {
             ...data
         });
     }
-
-    private setExchangeDataByMainCurrency(data: IHeaderData[]): void {
-        this.exchangeCoeff = data.reduce((prev, curr) => {
-            return {
-                ...prev,
-                [curr.currency]: curr.value
-            }
-        }, {})
-
-        console.log(this.exchangeCoeff);
-    }
-
 }

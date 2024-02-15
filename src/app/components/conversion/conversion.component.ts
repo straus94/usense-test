@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnDestroy, OnInit} from '@angular/core';
 import {
     AbstractControl,
     FormControl,
@@ -7,13 +7,13 @@ import {
     ReactiveFormsModule,
     Validators,
 } from '@angular/forms';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { CURRENCIES_ENUM } from '../../shared/app.enum';
-import { CommonModule } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
-import {Subject, combineLatest, debounceTime, filter, map, merge, of, switchMap, takeUntil, withLatestFrom} from 'rxjs';
+import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {CURRENCIES_ENUM} from '../../shared/app.enum';
+import {CommonModule} from '@angular/common';
+import {MatIconModule} from '@angular/material/icon';
+import {Subject, debounceTime, filter, merge, of, switchMap, takeUntil} from 'rxjs';
 import {StoreService} from '../../services/store.service';
 import {IConversionCurrencyData, IConversionData} from '../../shared/app.interfaces';
 import {tapOnce} from '../../core/rx-operators/tap-once.operator';
@@ -42,7 +42,7 @@ export class ConversionComponent implements OnInit, OnDestroy {
 
     private destroy: Subject<boolean> = new Subject<boolean>();
 
-    constructor(private storeService: StoreService) {}
+    constructor(private storeService: StoreService) { }
 
     ngOnInit(): void {
         this.storeService.formData$.pipe(
@@ -90,7 +90,6 @@ export class ConversionComponent implements OnInit, OnDestroy {
                 value: item.value
             }
 
-            console.log(this.form);
             if (this.form.invalid) {
                 return;
             }
@@ -98,24 +97,16 @@ export class ConversionComponent implements OnInit, OnDestroy {
             this.storeService.conversionCurrency(data, this.form.value)
         });
 
-        // this.leftCurrentCurrencyControl.valueChanges.pipe(takeUntil(this.destroy)).subscribe(value => {
-
-        // });
 
         merge(
             this.leftCurrentCurrencyControl.valueChanges.pipe(switchMap(value => of({changedKey: LEFT_CURRENCT_CURRENCY, value}))),
             this.rightCurrentCurrencyControl.valueChanges.pipe(switchMap(value => of({changedKey: RIGHT_CURRENCT_CURRENCY, value})))
         ).pipe(takeUntil(this.destroy)).subscribe((item) => {
-            console.log(item);
 
             this.storeService.changeCurrency(item);
             const data: IConversionCurrencyData = this.parseValueFromCurrencyControl(item.changedKey, item.value)
-            console.log(this.form.value);
-            console.log(data);
 
             this.storeService.conversionCurrency(data, this.form.value)
-
-            // this.storeService.conversionCurrency(data, this.form.value)
         })
     }
 
@@ -135,8 +126,6 @@ export class ConversionComponent implements OnInit, OnDestroy {
     public switchCurrency(): void {
         const rightCurrentCurrency = this.leftCurrentCurrencyControl?.value;
         const leftCurrentCurrency = this.rightCurrentCurrencyControl?.value;
-        console.log(leftCurrentCurrency);
-        console.log(rightCurrentCurrency);
 
         this.storeService.switchCurrency({
             leftCurrentCurrency,

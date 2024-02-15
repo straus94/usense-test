@@ -1,9 +1,8 @@
-import { CURRENCIES_ENUM } from './../../shared/app.enum';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
-import { DomSanitizer } from '@angular/platform-browser';
-import { MAIN_CURRENCY, REFRESH_SVG } from '../../shared/app.constants';
+import {CURRENCIES_ENUM} from './../../shared/app.enum';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatIconModule, } from '@angular/material/icon';
+import {MAIN_CURRENCY} from '../../shared/app.constants';
 import {CommonModule} from '@angular/common';
 import {Observable} from 'rxjs';
 import {IHeaderData} from '../../shared/app.interfaces';

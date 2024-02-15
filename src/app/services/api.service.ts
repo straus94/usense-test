@@ -1,214 +1,26 @@
 import {HttpClient} from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
-import {IConversionData, ICurrencies, IResponseConversion, IResponseCurrencies} from '../shared/app.interfaces';
+import {IResponseConversion, IResponseCurrencies} from '../shared/app.interfaces';
 import {CURRENCIES_ENUM} from '../shared/app.enum';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class ApiService {
 
-  private readonly API_KEY = 'd35e0bb274c9f0325194ae34';
-  private readonly BASE_URL = `https://v6.exchangerate-api.com/v6/${this.API_KEY}/`;
+    private readonly API_KEY = 'd35e0bb274c9f0325194ae34';
+    private readonly BASE_URL = `https://v6.exchangerate-api.com/v6/${this.API_KEY}/`;
 
-  constructor(
-    private http: HttpClient
-  ) {
-    console.log(this.http);
-  }
+    constructor(
+        private http: HttpClient
+    ) {}
 
-  public getCurrentRating(): Observable<IResponseCurrencies> {
-    return this.http.get<IResponseCurrencies>(`${this.BASE_URL}/latest/UAH`);
-    return of({
-        "result":"success",
-        "documentation":"https://www.exchangerate-api.com/docs",
-        "terms_of_use":"https://www.exchangerate-api.com/terms",
-        "time_last_update_unix":1707782401,
-        "time_last_update_utc":"Tue, 13 Feb 2024 00:00:01 +0000",
-        "time_next_update_unix":1707868801,
-        "time_next_update_utc":"Wed, 14 Feb 2024 00:00:01 +0000",
-        "base_code":"UAH",
-        "conversion_rates":{
-         "UAH":1,
-         "AED":0.09693,
-         "AFN":1.9485,
-         "ALL":2.5499,
-         "AMD":10.7091,
-         "ANG":0.04724,
-         "AOA":22.5900,
-         "ARS":21.9392,
-         "AUD":0.04048,
-         "AWG":0.04724,
-         "AZN":0.04493,
-         "BAM":0.04795,
-         "BBD":0.05279,
-         "BDT":2.9013,
-         "BGN":0.04795,
-         "BHD":0.009924,
-         "BIF":75.5093,
-         "BMD":0.02639,
-         "BND":0.03550,
-         "BOB":0.1828,
-         "BRL":0.1307,
-         "BSD":0.02639,
-         "BTN":2.1911,
-         "BWP":0.3633,
-         "BYN":0.08571,
-         "BZD":0.05279,
-         "CAD":0.03554,
-         "CDF":72.8125,
-         "CHF":0.02310,
-         "CLP":25.6398,
-         "CNY":0.1899,
-         "COP":103.3702,
-         "CRC":13.6825,
-         "CUP":0.6334,
-         "CVE":2.7030,
-         "CZK":0.6179,
-         "DJF":4.6906,
-         "DKK":0.1829,
-         "DOP":1.5493,
-         "DZD":3.5555,
-         "EGP":0.8163,
-         "ERN":0.3959,
-         "ETB":1.5007,
-         "EUR":0.02450,
-         "FJD":0.05939,
-         "FKP":0.02091,
-         "FOK":0.1829,
-         "GBP":0.02091,
-         "GEL":0.06995,
-         "GGP":0.02091,
-         "GHS":0.3299,
-         "GIP":0.02091,
-         "GMD":1.7939,
-         "GNF":226.5278,
-         "GTQ":0.2063,
-         "GYD":5.5438,
-         "HKD":0.2064,
-         "HNL":0.6521,
-         "HRK":0.1847,
-         "HTG":3.4895,
-         "HUF":9.5019,
-         "IDR":410.7383,
-         "ILS":0.09736,
-         "IMP":0.02091,
-         "INR":2.1911,
-         "IQD":34.7021,
-         "IRR":1124.9315,
-         "ISK":3.6352,
-         "JEP":0.02091,
-         "JMD":4.1356,
-         "JOD":0.01871,
-         "JPY":3.9346,
-         "KES":4.2106,
-         "KGS":2.3601,
-         "KHR":108.7333,
-         "KID":0.04048,
-         "KMF":12.0601,
-         "KRW":35.0879,
-         "KWD":0.008134,
-         "KYD":0.02199,
-         "KZT":11.8192,
-         "LAK":544.3397,
-         "LBP":395.8961,
-         "LKR":8.2727,
-         "LRD":5.0692,
-         "LSL":0.5024,
-         "LYD":0.1281,
-         "MAD":0.2655,
-         "MDL":0.4701,
-         "MGA":119.9265,
-         "MKD":1.5115,
-         "MMK":55.4065,
-         "MNT":90.6111,
-         "MOP":0.2126,
-         "MRU":1.0481,
-         "MUR":1.2036,
-         "MVR":0.4084,
-         "MWK":44.5628,
-         "MXN":0.4510,
-         "MYR":0.1259,
-         "MZN":1.6916,
-         "NAD":0.5024,
-         "NGN":39.0440,
-         "NIO":0.9726,
-         "NOK":0.2776,
-         "NPR":3.5058,
-         "NZD":0.04308,
-         "OMR":0.01015,
-         "PAB":0.02639,
-         "PEN":0.1020,
-         "PGK":0.09924,
-         "PHP":1.4813,
-         "PKR":7.3616,
-         "PLN":0.1060,
-         "PYG":193.2037,
-         "QAR":0.09607,
-         "RON":0.1219,
-         "RSD":2.8720,
-         "RUB":2.4051,
-         "RWF":33.6983,
-         "SAR":0.09897,
-         "SBD":0.2210,
-         "SCR":0.3702,
-         "SDG":11.8360,
-         "SEK":0.2753,
-         "SGD":0.03550,
-         "SHP":0.02091,
-         "SLE":0.5962,
-         "SLL":596.1587,
-         "SOS":15.1299,
-         "SRD":0.9694,
-         "SSP":29.5451,
-         "STN":0.6006,
-         "SYP":341.4608,
-         "SZL":0.5024,
-         "THB":0.9483,
-         "TJS":0.2890,
-         "TMT":0.09233,
-         "TND":0.08283,
-         "TOP":0.06252,
-         "TRY":0.8112,
-         "TTD":0.1789,
-         "TVD":0.04048,
-         "TWD":0.8303,
-         "TZS":66.8443,
-         "UGX":101.9375,
-         "USD":0.02639,
-         "UYU":1.0356,
-         "UZS":329.7005,
-         "VES":0.9586,
-         "VND":635.1469,
-         "VUV":3.1816,
-         "WST":0.07243,
-         "XAF":16.0802,
-         "XCD":0.07126,
-         "XDR":0.01992,
-         "XOF":16.0802,
-         "XPF":2.9253,
-         "YER":6.6197,
-         "ZAR":0.5024,
-         "ZMW":0.7151,
-         "ZWL":306.2680
-        }
-       } as IResponseCurrencies)
-  }
+    public getCurrentRating(): Observable<IResponseCurrencies> {
+        return this.http.get<IResponseCurrencies>(`${this.BASE_URL}/latest/UAH`);
+    }
 
-  public pairConversion(from: CURRENCIES_ENUM, to: CURRENCIES_ENUM): Observable<IResponseConversion> {
-    return this.http.get<IResponseConversion>(`${this.BASE_URL}/pair/${from}/${to}`);
-    // return of({
-    //     "result": "success",
-    //     "documentation": "https://www.exchangerate-api.com/docs",
-    //     "terms_of_use": "https://www.exchangerate-api.com/terms",
-    //     "time_last_update_unix": 1707782401,
-    //     "time_last_update_utc": "Tue, 13 Feb 2024 00:00:01 +0000",
-    //     "time_next_update_unix": 1707868801,
-    //     "time_next_update_utc": "Wed, 14 Feb 2024 00:00:01 +0000",
-    //     "base_code": "UAH",
-    //     "target_code": "USD",
-    //     "conversion_rate": 0.02639
-    // } as any)
-  }
+    public pairConversion(from: CURRENCIES_ENUM, to: CURRENCIES_ENUM): Observable<IResponseConversion> {
+        return this.http.get<IResponseConversion>(`${this.BASE_URL}/pair/${from}/${to}`);
+    }
 }
